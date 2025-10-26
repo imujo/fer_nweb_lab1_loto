@@ -2,6 +2,7 @@ import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
 import { desc, eq } from "drizzle-orm";
 import { db, draws, rounds, tickets, users } from "./index";
 import { createTicketSchema } from "@/lib/validations";
+import z from "zod";
 
 export const getCurrentRound = createServerFn().handler(async () => {
   const currentRound = await db
@@ -99,15 +100,17 @@ export const storeDrawResults = createServerOnlyFn(
   }
 );
 
-export const getDrawResults = createServerOnlyFn(async (roundId: number) => {
-  const draw = await db
-    .select()
-    .from(draws)
-    .where(eq(draws.roundId, roundId))
-    .limit(1);
+export const getDrawResults = createServerFn()
+  .inputValidator(z.object({ roundId: z.number() }))
+  .handler(async ({ data: { roundId } }) => {
+    const draw = await db
+      .select()
+      .from(draws)
+      .where(eq(draws.roundId, roundId))
+      .limit(1);
 
-  return draw[0] || null;
-});
+    return draw[0] || null;
+  });
 
 export const createOrUpdateUser = createServerOnlyFn(
   async (auth0Id: string, email: string, name?: string) => {

@@ -18,7 +18,9 @@ export const Route = createFileRoute("/")({
     let drawResults = null;
 
     if (currentRound) {
-      drawResults = await getDrawResults(currentRound.id);
+      drawResults = await getDrawResults({
+        data: { roundId: currentRound.id },
+      });
     }
 
     return { currentRound, drawResults };

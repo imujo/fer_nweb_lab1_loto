@@ -12,3 +12,6 @@ count.txt
 .vinxi
 todos.json
 tasks
+
+# Local Netlify folder
+.netlify
