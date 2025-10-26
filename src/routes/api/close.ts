@@ -16,6 +16,7 @@ export const Route = createFileRoute("/api/close")({
           return json({ success: true, round: closedRound }, { status: 200 });
         } catch (error) {
           console.error("Error closing round:", error);
+
           return json({ error: "Failed to close round" }, { status: 500 });
         }
       },
