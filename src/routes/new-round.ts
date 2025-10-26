@@ -3,7 +3,7 @@ import { json } from "@tanstack/react-start";
 import { createNewRound } from "@/db/queries";
 import { authMiddleware } from "@/lib/auth-middleware";
 
-export const Route = createFileRoute("/api/new-round")({
+export const Route = createFileRoute("/new-round")({
   server: {
     middleware: [authMiddleware],
     handlers: {

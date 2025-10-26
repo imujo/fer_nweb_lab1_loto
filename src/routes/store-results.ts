@@ -8,7 +8,7 @@ import {
 import { authMiddleware } from "@/lib/auth-middleware";
 import { storeResultsSchema } from "@/lib/validations";
 
-export const Route = createFileRoute("/api/store-results")({
+export const Route = createFileRoute("/store-results")({
   server: {
     middleware: [authMiddleware],
     handlers: {
@@ -40,7 +40,9 @@ export const Route = createFileRoute("/api/store-results")({
             );
           }
 
-          const existingResults = await getDrawResults(currentRound.id);
+          const existingResults = await getDrawResults({
+            data: { roundId: currentRound.id },
+          });
           if (existingResults) {
             return json(
               { error: "Results already exist for this round" },

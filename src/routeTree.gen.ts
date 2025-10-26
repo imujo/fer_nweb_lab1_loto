@@ -9,14 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StoreResultsRouteImport } from './routes/store-results'
+import { Route as NewRoundRouteImport } from './routes/new-round'
+import { Route as CloseRouteImport } from './routes/close'
 import { Route as CallbackRouteImport } from './routes/callback'
 import { Route as BuyTicketRouteImport } from './routes/buy-ticket'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TicketTicketIdRouteImport } from './routes/ticket.$ticketId'
-import { Route as ApiStoreResultsRouteImport } from './routes/api/store-results'
-import { Route as ApiNewRoundRouteImport } from './routes/api/new-round'
-import { Route as ApiCloseRouteImport } from './routes/api/close'
 
+const StoreResultsRoute = StoreResultsRouteImport.update({
+  id: '/store-results',
+  path: '/store-results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewRoundRoute = NewRoundRouteImport.update({
+  id: '/new-round',
+  path: '/new-round',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CloseRoute = CloseRouteImport.update({
+  id: '/close',
+  path: '/close',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CallbackRoute = CallbackRouteImport.update({
   id: '/callback',
   path: '/callback',
@@ -37,38 +52,23 @@ const TicketTicketIdRoute = TicketTicketIdRouteImport.update({
   path: '/ticket/$ticketId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStoreResultsRoute = ApiStoreResultsRouteImport.update({
-  id: '/api/store-results',
-  path: '/api/store-results',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNewRoundRoute = ApiNewRoundRouteImport.update({
-  id: '/api/new-round',
-  path: '/api/new-round',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiCloseRoute = ApiCloseRouteImport.update({
-  id: '/api/close',
-  path: '/api/close',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/buy-ticket': typeof BuyTicketRoute
   '/callback': typeof CallbackRoute
-  '/api/close': typeof ApiCloseRoute
-  '/api/new-round': typeof ApiNewRoundRoute
-  '/api/store-results': typeof ApiStoreResultsRoute
+  '/close': typeof CloseRoute
+  '/new-round': typeof NewRoundRoute
+  '/store-results': typeof StoreResultsRoute
   '/ticket/$ticketId': typeof TicketTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/buy-ticket': typeof BuyTicketRoute
   '/callback': typeof CallbackRoute
-  '/api/close': typeof ApiCloseRoute
-  '/api/new-round': typeof ApiNewRoundRoute
-  '/api/store-results': typeof ApiStoreResultsRoute
+  '/close': typeof CloseRoute
+  '/new-round': typeof NewRoundRoute
+  '/store-results': typeof StoreResultsRoute
   '/ticket/$ticketId': typeof TicketTicketIdRoute
 }
 export interface FileRoutesById {
@@ -76,9 +76,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/buy-ticket': typeof BuyTicketRoute
   '/callback': typeof CallbackRoute
-  '/api/close': typeof ApiCloseRoute
-  '/api/new-round': typeof ApiNewRoundRoute
-  '/api/store-results': typeof ApiStoreResultsRoute
+  '/close': typeof CloseRoute
+  '/new-round': typeof NewRoundRoute
+  '/store-results': typeof StoreResultsRoute
   '/ticket/$ticketId': typeof TicketTicketIdRoute
 }
 export interface FileRouteTypes {
@@ -87,27 +87,27 @@ export interface FileRouteTypes {
     | '/'
     | '/buy-ticket'
     | '/callback'
-    | '/api/close'
-    | '/api/new-round'
-    | '/api/store-results'
+    | '/close'
+    | '/new-round'
+    | '/store-results'
     | '/ticket/$ticketId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/buy-ticket'
     | '/callback'
-    | '/api/close'
-    | '/api/new-round'
-    | '/api/store-results'
+    | '/close'
+    | '/new-round'
+    | '/store-results'
     | '/ticket/$ticketId'
   id:
     | '__root__'
     | '/'
     | '/buy-ticket'
     | '/callback'
-    | '/api/close'
-    | '/api/new-round'
-    | '/api/store-results'
+    | '/close'
+    | '/new-round'
+    | '/store-results'
     | '/ticket/$ticketId'
   fileRoutesById: FileRoutesById
 }
@@ -115,14 +115,35 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuyTicketRoute: typeof BuyTicketRoute
   CallbackRoute: typeof CallbackRoute
-  ApiCloseRoute: typeof ApiCloseRoute
-  ApiNewRoundRoute: typeof ApiNewRoundRoute
-  ApiStoreResultsRoute: typeof ApiStoreResultsRoute
+  CloseRoute: typeof CloseRoute
+  NewRoundRoute: typeof NewRoundRoute
+  StoreResultsRoute: typeof StoreResultsRoute
   TicketTicketIdRoute: typeof TicketTicketIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/store-results': {
+      id: '/store-results'
+      path: '/store-results'
+      fullPath: '/store-results'
+      preLoaderRoute: typeof StoreResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-round': {
+      id: '/new-round'
+      path: '/new-round'
+      fullPath: '/new-round'
+      preLoaderRoute: typeof NewRoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/close': {
+      id: '/close'
+      path: '/close'
+      fullPath: '/close'
+      preLoaderRoute: typeof CloseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/callback': {
       id: '/callback'
       path: '/callback'
@@ -151,27 +172,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TicketTicketIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/store-results': {
-      id: '/api/store-results'
-      path: '/api/store-results'
-      fullPath: '/api/store-results'
-      preLoaderRoute: typeof ApiStoreResultsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/new-round': {
-      id: '/api/new-round'
-      path: '/api/new-round'
-      fullPath: '/api/new-round'
-      preLoaderRoute: typeof ApiNewRoundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/close': {
-      id: '/api/close'
-      path: '/api/close'
-      fullPath: '/api/close'
-      preLoaderRoute: typeof ApiCloseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -179,9 +179,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuyTicketRoute: BuyTicketRoute,
   CallbackRoute: CallbackRoute,
-  ApiCloseRoute: ApiCloseRoute,
-  ApiNewRoundRoute: ApiNewRoundRoute,
-  ApiStoreResultsRoute: ApiStoreResultsRoute,
+  CloseRoute: CloseRoute,
+  NewRoundRoute: NewRoundRoute,
+  StoreResultsRoute: StoreResultsRoute,
   TicketTicketIdRoute: TicketTicketIdRoute,
 }
 export const routeTree = rootRouteImport
